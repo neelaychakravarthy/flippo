@@ -215,7 +215,7 @@ public class Board extends JFrame{
 									boolean temp = board[r][c].isToken();
 									System.out.println(board[r][c].getColor());
 									this.print();
-									while(temp && r < 8 && c < 8)
+									while(temp && r < 8 && c < 8 && r >= 0 && c >= 0)
 									{
 										int col = board[r][c].getColor();
 										if(col == color)
