@@ -21,6 +21,15 @@ public class Token {
 		return "x: "+x+"; y: "+y+"; type: "+type;
 	}
 	
+	public boolean equals(Token t)
+	{
+		if(type == t.getColor())
+		{
+			return true;
+		}
+		return false;
+	}
+	
 	public void flip()
 	{
 		if(type == 1)

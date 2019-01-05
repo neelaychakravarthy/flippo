@@ -49,6 +49,31 @@ public class Board extends JFrame{
 		board[4][4] = new Token(4, 4, 1);
 	}
 	
+	public Board(Board b)
+	{
+		
+		super("FLIPPO BOARD");
+		setSize(800, 800);
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLayout(new FlowLayout());
+		JPanel panel = new JPanel();
+		getContentPane().add(panel);
+		
+		rows = b.rows;
+		cols = b.cols;
+		
+		board = new Token[rows][cols];
+		for(int r = 0; r < rows; r++)
+		{
+			for(int c = 0; c < cols; c++)
+			{
+				this.set(b.get(r,  c), r, c);
+			}
+		}
+		
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * @see java.awt.Window#paint(java.awt.Graphics)
@@ -166,7 +191,6 @@ public class Board extends JFrame{
 	
 	public void add(Token t, int x, int y)
 	{
-		
 		//System.out.println("x,y: " +x+","+y);
 		
 		try
@@ -206,15 +230,7 @@ public class Board extends JFrame{
 //									}
 									int r = x + i;
 									int c = y + j;
-									System.out.println("r: "+r);
-									
-									
-									System.out.println("c: "+c);
-									System.out.println(board[r][c].toString());
-									System.out.println(board[r][c].isToken());
 									boolean temp = board[r][c].isToken();
-									System.out.println(board[r][c].getColor());
-									this.print();
 									while(temp && r < 8 && c < 8 && r >= 0 && c >= 0)
 									{
 										int col = board[r][c].getColor();
@@ -294,10 +310,14 @@ public class Board extends JFrame{
 		{
 			for(int c = 0; c < 8; c++)
 			{
-				b.set(board[r][c], r, c);
+				b.set(new Token(r, c, board[r][c].getColor()), r, c);
 			}
 		}
 		return b;
+	}
+	
+	public Board copy(Board b) {
+		return new Board(b);
 	}
 	
 	public boolean gameOver()
@@ -315,6 +335,27 @@ public class Board extends JFrame{
 		
 		return true;
 		
+	}
+	
+	public Token[][] getBoard()
+	{
+		return board;
+	}
+	
+	public boolean equals(Board b)
+	{
+		Token[][] other = b.getBoard();
+		for(int r = 0; r < 8; r++)
+		{
+			for(int c = 0; c< 8; c++)
+			{
+				if(!(board[r][c].equals(other[r][c])))
+				{
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 	
 	

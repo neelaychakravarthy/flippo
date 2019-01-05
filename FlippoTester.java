@@ -17,23 +17,11 @@ public class FlippoTester {
 		Board b = new Board(8, 8);
 		b.setVisible(true);
 		
-		int playerColor;
-		int compColor;
-		
-		System.out.println("Please enter BLACK or WHITE for player color");
+		int playerColor = 1;
+		int compColor = 2;
 		
 		Scanner scan = new Scanner(System.in);
 		
-		if(scan.nextLine().equals("WHITE"))
-		{
-			playerColor = 1;
-			compColor = 2;
-		}
-		else
-		{
-			playerColor = 2;
-			compColor = 1;
-		}
 		
 		System.out.println("To make a turn, please type in the following format : A5 or D7 and so on...");
 		System.out.println("WHITE goes first");
@@ -55,7 +43,8 @@ public class FlippoTester {
 			{
 				FlippoComp comp = new FlippoComp();
 				System.out.println("Computer making move . . .");
-				b = comp.minimax(b, 10, 60, -60, true).copy();
+//				b = comp.minimax(b, 3, 60, -60, true).copy();
+				b = b.copy(comp.getBestMove(b,  true));
 				b.repaint();
 				System.out.println("Type your move");
 				char letter = turn.charAt(0);
@@ -76,7 +65,6 @@ public class FlippoTester {
 			}
 			else
 			{
-				System.out.println("Type your move");
 				char letter = turn.charAt(0);
 				int row = letter - 65;
 				char number = turn.charAt(1);
@@ -87,6 +75,9 @@ public class FlippoTester {
 				{
 					b.add(new Token(row, col, 1), row, col);
 //					b.set(new Token(row, col, 1), row, col);
+					System.out.println("Player Move :");
+					b.print();
+					b.repaint();
 				}
 				else
 				{
@@ -95,7 +86,11 @@ public class FlippoTester {
 				
 				FlippoComp comp = new FlippoComp();
 				System.out.println("Computer making move . . .");
-				b = comp.minimax(b, 10, 60, -60, false).copy();
+				b = b.copy(comp.minimax(b, 3, 60, -60, false));
+//				b = b.copy(comp.getBestMove(b,  false));
+				System.out.println("Comp Move:");
+				b.print();
+				b.repaint();
 				
 			}
 			
